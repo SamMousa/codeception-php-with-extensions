@@ -6,15 +6,15 @@ RUN docker-php-ext-install pdo pdo_mysql
 
 # Install php-intl
 RUN apt-get update && \
-    apt-get -y install libicu-dev && \
+    apt-get -y install --no-install-recommends libicu-dev && \
     docker-php-ext-install intl && \
     apt-get -y purge libicu-dev && \
     rm -rf /var/lib/apt/lists/*
 
 # Install php-gd
 RUN apt-get update && \
-    apt-get -y install libjpeg-dev libpng-dev libfreetype6-dev && \
-    docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr && \
+    apt-get -y install --no-install-recommends libjpeg-dev libpng-dev libfreetype6-dev && \
+    docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr --with-freetype-dir=/usr && \
     docker-php-ext-install gd && \
     apt-get -y purge libpng-dev libfreetype6-dev && \
     rm -rf /var/lib/apt/lists/*
@@ -45,4 +45,9 @@ RUN cd /tmp && \
     git clone https://github.com/vishnubob/wait-for-it.git && \
     cp wait-for-it/wait-for-it.sh /bin && \
     rm -rf /tmp/*
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends openssh-client && \
+    rm -rf /var/lib/apt/lists/*
+
 ENTRYPOINT []
