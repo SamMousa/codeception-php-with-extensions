@@ -49,7 +49,7 @@ RUN cd /tmp && \
 # Install php wait-for-it
 RUN cd /tmp && \
     git clone https://github.com/SAM-IT/wait-for-it-php.git && \
-    cp wait-for-it.php /bin/wait-for-it && \
+    cp wait-for-it-php/wait-for-it.php /bin/wait-for-it && \
     rm -rf /tmp/*
 RUN apt-get update && \
     apt-get install -y --no-install-recommends openssh-client && \
