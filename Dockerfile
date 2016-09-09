@@ -42,10 +42,15 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/bin --fil
 
 # Install wait-for-it
 RUN cd /tmp && \
-    git clone https://github.com/vishnubob/wait-for-it.git && \
+    git clone https://github.com/jlordiales/wait-for-it.git && \
     cp wait-for-it/wait-for-it.sh /bin && \
     rm -rf /tmp/*
 
+# Install php wait-for-it
+RUN cd /tmp && \
+    git clone https://github.com/SAM-IT/wait-for-it-php.git && \
+    cp wait-for-it.php /bin/wait-for-it && \
+    rm -rf /tmp/*
 RUN apt-get update && \
     apt-get install -y --no-install-recommends openssh-client && \
     rm -rf /var/lib/apt/lists/*
