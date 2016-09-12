@@ -2,7 +2,7 @@ FROM codeception/codeception
 
 MAINTAINER Sam Mousa <sam@mousa.nl>
 
-RUN docker-php-ext-install pdo pdo_mysql
+RUN docker-php-ext-install pdo pdo_mysql sockets pcntl
 
 # Install php-intl
 RUN apt-get update && \
@@ -46,13 +46,17 @@ RUN cd /tmp && \
     cp wait-for-it/wait-for-it.sh /bin && \
     rm -rf /tmp/*
 
-# Install php wait-for-it
-RUN cd /tmp && \
-    git clone https://github.com/SAM-IT/wait-for-it-php.git && \
-    cp wait-for-it-php/wait-for-it.php /bin/wait-for-it && \
-    rm -rf /tmp/*
 RUN apt-get update && \
     apt-get install -y --no-install-recommends openssh-client && \
     rm -rf /var/lib/apt/lists/*
+
+
+# Install php wait-for-it
+RUN cd /tmp && \
+    git clone  --branch v0.3  https://github.com/SAM-IT/wait-for-it-php.git && \
+    cd wait-for-it-php &&\
+    php -d phar.readonly=0 build.php && \
+    cp wait-for-it.phar /bin/wait-for-it && \
+    rm -rf /tmp/*
 
 ENTRYPOINT []
