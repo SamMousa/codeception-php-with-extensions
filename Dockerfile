@@ -53,7 +53,7 @@ RUN apt-get update && \
 
 # Install php wait-for-it
 RUN cd /tmp && \
-    git clone  --branch v0.3.1 https://github.com/SAM-IT/wait-for-it-php.git && \
+    git clone  --branch v0.4 https://github.com/SAM-IT/wait-for-it-php.git && \
     cd wait-for-it-php &&\
     php -d phar.readonly=0 build.php && \
     cp wait-for-it.phar /bin/wait-for-it && \
