@@ -56,5 +56,9 @@ RUN cd /tmp && \
     cp wait-for-it.phar /bin/wait-for-it && \
     rm -rf /tmp/*
 
+# Install ssh client, needed for git over ssh.
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends openssh-client && \
+    rm -rf /var/lib/apt/lists/*
 
 ENTRYPOINT []
