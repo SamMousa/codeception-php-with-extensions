@@ -19,6 +19,13 @@ RUN apt-get update && \
     apt-get -y purge libpng-dev libfreetype6-dev && \
     rm -rf /var/lib/apt/lists/*
 
+# Install php mcrypt.
+RUN apt-get update && \
+    apt-get -y install --no-install-recommends libmcrypt-dev && \
+    docker-php-ext-install mcrypt && \
+    apt-get -y purge libmcrypt-dev && \
+    rm -rf /var/lib/apt/lists/*
+
 # Install sassc
 RUN cd /tmp && \
     git clone https://github.com/sass/libsass.git && \
@@ -40,17 +47,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/bin --fil
     composer -n global require fxp/composer-asset-plugin && \
     composer clear-cache
 
-# Install wait-for-it
-RUN cd /tmp && \
-    git clone https://github.com/jlordiales/wait-for-it.git && \
-    cp wait-for-it/wait-for-it.sh /bin && \
-    rm -rf /tmp/*
-
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends openssh-client && \
-    rm -rf /var/lib/apt/lists/*
-
-
 # Install php wait-for-it
 RUN cd /tmp && \
     git clone  --branch v0.5.4 https://github.com/SAM-IT/wait-for-it-php.git && \
@@ -59,5 +55,6 @@ RUN cd /tmp && \
     php -d phar.readonly=0 build.php && \
     cp wait-for-it.phar /bin/wait-for-it && \
     rm -rf /tmp/*
+
 
 ENTRYPOINT []
