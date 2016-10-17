@@ -42,9 +42,11 @@ RUN cd /tmp && \
     mv bin/sassc /bin/sassc && \
     rm -rf /tmp/*
 
-# Install composer & fxp/composer-asset-plugin
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/bin --filename=composer && \
-    composer -n global require fxp/composer-asset-plugin && \
+# Install composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/bin --filename=composer
+
+# fxp/composer-asset-plugin
+RUN composer -n global require fxp/composer-asset-plugin && \
     composer clear-cache
 
 # Install php wait-for-it
@@ -60,5 +62,10 @@ RUN cd /tmp && \
 RUN apt-get update && \
     apt-get install -y --no-install-recommends openssh-client && \
     rm -rf /var/lib/apt/lists/*
+
+# Install codeception plugin redcomponent/teststatistics.
+RUN cd /repo && \
+    composer -n require redcomponent/teststatistics && \
+    composer clear-cache
 
 ENTRYPOINT []
